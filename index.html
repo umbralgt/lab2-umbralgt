@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>( UMBRAL ) — Lab 2 · Arquitectura</title>
+<meta name="description" content="Herramientas para entender cómo vivimos y construimos la ciudad. POT, espacio urbano y regulación, sin tecnicismos innecesarios.">
+<link rel="stylesheet" href="assets/umbral-style.css">
+<style>
+.home-wrap { padding-top: var(--nav-h); min-height: 100vh; display: flex; flex-direction: column; }
+
+.home-hero {
+  padding: 56px 40px 48px;
+  border-bottom: var(--border-soft);
+  max-width: 860px;
+}
+.home-eyebrow {
+  font-size: 10px; font-weight: 600; color: var(--gray-500);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+}
+.home-eyebrow::before {
+  content: ''; display: inline-block;
+  width: 20px; height: 1.5px; background: var(--black);
+}
+.home-title {
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 700; color: var(--black);
+  line-height: 1.05; letter-spacing: -0.03em;
+  margin-bottom: 16px;
+}
+.home-sub {
+  font-size: 14px; color: var(--gray-700);
+  max-width: 480px; line-height: 1.7;
+}
+
+/* Franja de contexto */
+.home-context {
+  padding: 20px 40px;
+  border-bottom: var(--border-soft);
+  display: flex; align-items: center; gap: 32px;
+  flex-wrap: wrap;
+}
+.home-context-item {
+  display: flex; align-items: center; gap: 10px;
+}
+.home-context-icon {
+  font-size: 16px; color: var(--gray-500);
+  flex-shrink: 0;
+}
+.home-context-text {
+  font-size: 11px; font-weight: 600; color: var(--gray-600);
+  letter-spacing: 0.02em; line-height: 1.4;
+}
+.home-context-divider {
+  width: 1px; height: 28px; background: var(--gray-300);
+}
+
+.home-content {
+  flex: 1; padding: 36px 40px;
+  display: flex; flex-direction: column; gap: 40px;
+}
+.home-section-label {
+  font-size: 10px; font-weight: 700; color: var(--gray-500);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: var(--border-soft);
+}
+
+/* Nota conceptual */
+.home-nota {
+  background: var(--gray-100);
+  border: var(--border-soft);
+  border-left: 2px solid var(--black);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  max-width: 640px;
+}
+.home-nota-label {
+  font-size: 9px; font-weight: 700; color: var(--gray-500);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.home-nota-text {
+  font-size: 12px; color: var(--gray-700); line-height: 1.7;
+}
+
+@media (max-width: 680px) {
+  .home-hero { padding: 36px 20px 32px; }
+  .home-context { padding: 16px 20px; gap: 16px; }
+  .home-context-divider { display: none; }
+  .home-content { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Navegación principal">
+  <a class="nav-logo" href="index-lab2.html" aria-label="Umbral Lab 2 inicio">
+    ( U ) &nbsp; Lab 2 · Arquitectura
+  </a>
+  <div class="nav-modules">
+    <a class="nav-mod" href="https://mapa-pot.umbralgt.com">Mapa POT</a>
+    <a class="nav-mod" href="https://calculadora-pot.umbralgt.com">Calculadora POT</a>
+    <a class="nav-mod" href="https://entender-pot.umbralgt.com">Entender el POT</a>
+  </div>
+  <a class="nav-back" href="https://www.umbralgt.com" target="_blank" rel="noopener">
+    <span>←</span>
+    <span>umbralgt.com</span>
+  </a>
+</nav>
+
+<div class="home-wrap">
+
+  <div class="home-hero">
+    <div class="home-eyebrow">Laboratorio 2 · Ciudad de Guatemala · 2025</div>
+    <h1 class="home-title">
+      Cómo vivimos y construimos la ciudad.
+    </h1>
+    <p class="home-sub">
+      Herramientas para entender el espacio urbano, la regulación y el territorio.
+      Sin renders. Sin aspiraciones vacías. Sin tecnicismos innecesarios.
+    </p>
+  </div>
+
+  <div class="home-context">
+    <div class="home-context-item">
+      <span class="home-context-icon">◎</span>
+      <span class="home-context-text">Espacio y ciudad</span>
+    </div>
+    <div class="home-context-divider"></div>
+    <div class="home-context-item">
+      <span class="home-context-icon">◑</span>
+      <span class="home-context-text">Regulación urbana</span>
+    </div>
+    <div class="home-context-divider"></div>
+    <div class="home-context-item">
+      <span class="home-context-icon">◈</span>
+      <span class="home-context-text">Potencial constructivo</span>
+    </div>
+    <div class="home-context-divider"></div>
+    <div class="home-context-item">
+      <span class="home-context-icon">⬡</span>
+      <span class="home-context-text">Vivienda y territorio</span>
+    </div>
+  </div>
+
+  <div class="home-content">
+
+    <div>
+      <div class="home-section-label">Módulos disponibles</div>
+      <div class="home-grid" role="main">
+
+        <a class="mod-card live" href="https://mapa-pot.umbralgt.com" target="_blank" rel="noopener">
+          <div class="mod-icon-wrap">⬡</div>
+          <div class="mod-name">Mapa POT</div>
+          <div class="mod-desc">Visualizá el Plan de Ordenamiento Territorial de Ciudad de Guatemala sobre el mapa. Uso de suelo, densidad permitida y zonas de desarrollo por sector.</div>
+          <div class="mod-status live"><span class="live-dot"></span>En vivo</div>
+        </a>
+
+        <a class="mod-card live" href="https://calculadora-pot.umbralgt.com" target="_blank" rel="noopener">
+          <div class="mod-icon-wrap live">◎</div>
+          <div class="mod-name">Calculadora POT</div>
+          <div class="mod-desc">Ingresá un terreno y calculá su potencial constructivo según la normativa vigente. Metros edificables, coeficiente de uso y restricciones aplicables.</div>
+          <div class="mod-status live"><span class="live-dot"></span>En vivo</div>
+        </a>
+
+        <a class="mod-card live" href="https://entender-pot.umbralgt.com" target="_blank" rel="noopener">
+          <div class="mod-icon-wrap live">◻</div>
+          <div class="mod-name">Entender el POT</div>
+          <div class="mod-desc">Una guía clara para leer la regulación urbana sin ser arquitecto ni abogado. Qué dice, qué implica y cómo afecta lo que podés hacer con tu espacio.</div>
+          <div class="mod-status live"><span class="live-dot"></span>En vivo</div>
+        </a>
+
+      </div>
+    </div>
+
+    <div>
+      <div class="home-nota">
+        <div class="home-nota-label">Nota de laboratorio</div>
+        <div class="home-nota-text">
+          Estas herramientas son para explorar, visualizar y llegar mejor preparado — no para reemplazar
+          a un arquitecto, ingeniero o abogado. Para decisiones formales, la palabra final siempre
+          la tienen los profesionales del tema y las entidades municipales correspondientes.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-headline">entender. explorar. habitar.</div>
+    <div class="footer-sub">Per experimentum.</div>
+    <div class="footer-bottom">
+      <span class="footer-meta">( UMBRAL ) · Un experimento 2025–2027 · Ciudad de Guatemala</span>
+      <a class="footer-link" href="https://www.umbralgt.com" target="_blank" rel="noopener">
+        <span>umbralgt.com</span>
+        <span>↗</span>
+      </a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
