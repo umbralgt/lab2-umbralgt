@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>( UMBRAL ) — Lab 2 · Arquitectura</title>
+<meta name="description" content="Herramientas para entender cómo vivimos y construimos la ciudad. POT, espacio urbano y regulación, sin tecnicismos innecesarios.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --black:     #0a0a0a;
+  --white:     #ffffff;
+  --gray-100:  #f8f8f8;
+  --gray-200:  #f0f0f0;
+  --gray-300:  #e8e8e8;
+  --gray-400:  #d0d0d0;
+  --gray-500:  #aaaaaa;
+  --gray-600:  #888888;
+  --gray-700:  #555555;
+  --border-strong: 1.5px solid #0a0a0a;
+  --border-soft:   1px solid #e8e8e8;
+  --border-muted:  1px solid #f0f0f0;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --font: 'Space Grotesk', system-ui, sans-serif;
+  --nav-h: 54px;
+  --trans: all 0.15s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body {
+  font-family: var(--font);
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: var(--white);
+  border-bottom: var(--border-strong);
+  display: flex; align-items: center;
+  z-index: 9000; padding: 0 20px; gap: 16px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--black);
+  font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+  white-space: nowrap; flex-shrink: 0;
+  padding-right: 16px; border-right: var(--border-soft); height: 100%;
+}
+.nav-modules {
+  display: flex; align-items: center; height: 100%;
+  flex: 1; gap: 4px; overflow-x: auto;
+  scrollbar-width: none; padding: 0 4px;
+}
+.nav-modules::-webkit-scrollbar { display: none; }
+.nav-mod {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; text-decoration: none;
+  color: var(--gray-600); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: var(--trans); white-space: nowrap; height: 34px;
+}
+.nav-mod:hover { color: var(--black); background: var(--gray-200); }
+.nav-back {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 16px; background: var(--black); color: var(--white);
+  font-family: var(--font); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.01em; border-radius: var(--radius-md);
+  border: none; cursor: pointer; text-decoration: none;
+  white-space: nowrap; flex-shrink: 0; margin-left: auto;
+  transition: var(--trans);
+}
+.nav-back:hover { opacity: 0.85; }
+
+/* ── Home ────────────────────────────────────────────────────── */
+.home-wrap { padding-top: var(--nav-h); min-height: 100vh; display: flex; flex-direction: column; }
+
+.home-hero {
+  padding: 56px 40px 48px;
+  border-bottom: var(--border-soft);
+  max-width: 860px;
+}
+.home-eyebrow {
+  font-size: 10px; font-weight: 600; color: var(--gray-500);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+}
+.home-eyebrow::before {
+  content: ''; display: inline-block;
+  width: 20px; height: 1.5px; background: var(--black);
+}
+.home-title {
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 700; color: var(--black);
+  line-height: 1.05; letter-spacing: -0.03em;
+  margin-bottom: 16px;
+}
+.home-sub {
+  font-size: 14px; color: var(--gray-700);
+  max-width: 480px; line-height: 1.7;
+}
+
+.home-context {
+  padding: 20px 40px;
+  border-bottom: var(--border-soft);
+  display: flex; align-items: center; gap: 32px;
+  flex-wrap: wrap;
+}
+.home-context-item { display: flex; align-items: center; gap: 10px; }
+.home-context-icon { font-size: 16px; color: var(--gray-500); flex-shrink: 0; }
+.home-context-text { font-size: 11px; font-weight: 600; color: var(--gray-600); letter-spacing: 0.02em; line-height: 1.4; }
+.home-context-divider { width: 1px; height: 28px; background: var(--gray-300); }
+
+.home-content {
+  flex: 1; padding: 36px 40px;
+  display: flex; flex-direction: column; gap: 40px;
+}
+.home-section-label {
+  font-size: 10px; font-weight: 700; color: var(--gray-500);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: var(--border-soft);
+}
+
+/* ── Grid de módulos ─────────────────────────────────────────── */
+.home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.mod-card { border: 1.5px solid var(--gray-300); border-radius: var(--radius-lg); padding: 22px; text-decoration: none; display: flex; flex-direction: column; transition: border-color 0.15s; cursor: pointer; }
+.mod-card:hover { border-color: var(--black); }
+.mod-card.live { border-color: var(--black); }
+.mod-icon-wrap { width: 36px; height: 36px; border: 1.5px solid var(--gray-300); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 15px; margin-bottom: 14px; }
+.mod-card.live .mod-icon-wrap { border-color: var(--black); }
+.mod-name { font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 6px; }
+.mod-desc { font-size: 12px; color: var(--gray-600); line-height: 1.6; flex: 1; margin-bottom: 14px; }
+.mod-status { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--gray-400); display: flex; align-items: center; gap: 6px; }
+.mod-status.live { color: var(--black); }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--black); flex-shrink: 0; }
+
+/* ── Nota ────────────────────────────────────────────────────── */
+.home-nota {
+  background: var(--gray-100);
+  border: var(--border-soft);
+  border-left: 2px solid var(--black);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  max-width: 640px;
+}
+.home-nota-label {
+  font-size: 9px; font-weight: 700; color: var(--gray-500);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.home-nota-text { font-size: 12px; color: var(--gray-700); line-height: 1.7; }
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.footer { background: var(--black); padding: 36px 32px 28px; }
+.footer-headline { font-size: clamp(22px,3vw,32px); font-weight: 700; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 6px; }
+.footer-sub { font-size: 13px; color: #555; font-style: italic; margin-bottom: 28px; }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid #1e1e1e; flex-wrap: wrap; gap: 12px; }
+.footer-meta { font-size: 11px; color: #555; font-weight: 500; }
+.footer-link { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px; background: var(--white); color: var(--black); font-size: 12px; font-weight: 500; border-radius: var(--radius-md); text-decoration: none; transition: var(--trans); }
+.footer-link:hover { opacity: 0.85; }
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 2px; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .home-hero { padding: 36px 20px 32px; }
+  .home-context { padding: 16px 20px; gap: 16px; }
+  .home-context-divider { display: none; }
+  .home-content { padding: 28px 20px; }
+  .nav-modules { display: none; }
+  .home-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Navegación principal">
+  <a class="nav-logo" href="https://lab2.umbralgt.com" aria-label="Umbral Lab 2 inicio">
+    ( U ) &nbsp; Lab 2 · Arquitectura
+  </a>
+  <div class="nav-modules">
+    <a class="nav-mod" href="https://mapa-pot.umbralgt.com">Mapa POT</a>
+    <a class="nav-mod" href="https://calculadora-pot.umbralgt.com">Calculadora POT</a>
+    <a class="nav-mod" href="https://entender-pot.umbralgt.com">Entender el POT</a>
+  </div>
+  <a class="nav-back" href="https://www.umbralgt.com" target="_blank" rel="noopener">
+    <span>←</span>
+    <span>umbralgt.com</span>
+  </a>
+</nav>
+
+<div class="home-wrap">
+
+  <div class="home-hero">
+    <div class="home-eyebrow">Laboratorio 2 · Ciudad de Guatemala · 2025</div>
+    <h1 class="home-title">
+      Cómo vivimos y construimos la ciudad.
+    </h1>
+    <p class="home-sub">
+      Herramientas para entender el espacio urbano, la regulación y el territorio.
+      Sin renders. Sin aspiraciones vacías. Sin tecnicismos innecesarios.
+    </p>
+  </div>
+
+  <div class="home-context">
+    <div class="home-context-item">
+      <span class="home-context-icon">◎</span>
+      <span class="home-context-text">Espacio y ciudad</span>
+    </div>
+    <div class="home-context-divider"></div>
+    <div class="home-context-item">
+      <span class="home-context-icon">◑</span>
+      <span class="home-context-text">Regulación urbana</span>
+    </div>
+    <div class="home-context-divider"></div>
+    <div class="home-context-item">
+      <span class="home-context-icon">◈</span>
+      <span class="home-context-text">Potencial constructivo</span>
+    </div>
+    <div class="home-context-divider"></div>
+    <div class="home-context-item">
+      <span class="home-context-icon">⬡</span>
+      <span class="home-context-text">Vivienda y territorio</span>
+    </div>
+  </div>
+
+  <div class="home-content">
+
+    <div>
+      <div class="home-section-label">Módulos disponibles</div>
+      <div class="home-grid" role="main">
+
+        <a class="mod-card live" href="https://mapa-pot.umbralgt.com" target="_blank" rel="noopener">
+          <div class="mod-icon-wrap">⬡</div>
+          <div class="mod-name">Mapa POT</div>
+          <div class="mod-desc">Visualizá el Plan de Ordenamiento Territorial de Ciudad de Guatemala sobre el mapa. Uso de suelo, densidad permitida y zonas de desarrollo por sector.</div>
+          <div class="mod-status live"><span class="live-dot"></span>En vivo</div>
+        </a>
+
+        <a class="mod-card live" href="https://calculadora-pot.umbralgt.com" target="_blank" rel="noopener">
+          <div class="mod-icon-wrap live">◎</div>
+          <div class="mod-name">Calculadora POT</div>
+          <div class="mod-desc">Ingresá un terreno y calculá su potencial constructivo según la normativa vigente. Metros edificables, coeficiente de uso y restricciones aplicables.</div>
+          <div class="mod-status live"><span class="live-dot"></span>En vivo</div>
+        </a>
+
+        <a class="mod-card live" href="https://entender-pot.umbralgt.com" target="_blank" rel="noopener">
+          <div class="mod-icon-wrap live">◻</div>
+          <div class="mod-name">Entender el POT</div>
+          <div class="mod-desc">Una guía clara para leer la regulación urbana sin ser arquitecto ni abogado. Qué dice, qué implica y cómo afecta lo que podés hacer con tu espacio.</div>
+          <div class="mod-status live"><span class="live-dot"></span>En vivo</div>
+        </a>
+
+      </div>
+    </div>
+
+    <div>
+      <div class="home-nota">
+        <div class="home-nota-label">Nota de laboratorio</div>
+        <div class="home-nota-text">
+          Estas herramientas son para explorar, visualizar y llegar mejor preparado — no para reemplazar
+          a un arquitecto, ingeniero o abogado. Para decisiones formales, la palabra final siempre
+          la tienen los profesionales del tema y las entidades municipales correspondientes.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-headline">entender. explorar. habitar.</div>
+    <div class="footer-sub">Per experimentum.</div>
+    <div class="footer-bottom">
+      <span class="footer-meta">( UMBRAL ) · Un experimento 2025–2027 · Ciudad de Guatemala</span>
+      <a class="footer-link" href="https://www.umbralgt.com" target="_blank" rel="noopener">
+        <span>umbralgt.com</span>
+        <span>↗</span>
+      </a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
